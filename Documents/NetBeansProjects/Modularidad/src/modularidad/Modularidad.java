@@ -15,37 +15,44 @@ public class Modularidad {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Scanner sc = new Scanner (System.in);
-        System.out.println("Ingrese el nombre del Estudiante");
-        String nombre =sc.nextLine();
-        System.out.println("Ingrese la cantidad de notas a registrar");
+     Scanner sc = new Scanner(System.in);
+
+       
+        System.out.println("Ingrese el nombre del Estudiante:");
+        String nombre = sc.nextLine();
+        
+        System.out.println("Ingrese la cantidad de notas:");
         int n = sc.nextInt();
-        Double[] notas=new Double[n];
+        Double[] notas = new Double[n];
+
         for (int i = 0; i < n; i++) {
-            
-            System.out.println("Ingrese las nota "+(i+1));
-            notas[i]=sc.nextDouble();
-            
-            
+            System.out.print("Nota " + (i + 1) + ": ");
+            notas[i] = sc.nextDouble();
         }
-        Estudiante e =new Estudiante(nombre,notas);
-        double promedio =CalculoAcademico.calculoPromedio(e.notas);
-        boolean aprovado=CalculoAcademico.aprueba(promedio);
-        double extra=CalculoAcademico.puntoExtra(promedio);
-        System.out.println("Desea aplicar el punto extra ");
-        System.out.println("S.1"+"\nN.2");
+
+        
+        Estudiante estudiante = new Estudiante(nombre, notas);
+        double promedioBase = CalculoAcademico.calcularPromedio(estudiante.getNotas());
+
+  
+        System.out.println("Desea aplicar el punto extra\n1. Si\n2. No");
         int op = sc.nextInt();
-        if (op==1) {
-            CalculoAcademico.puntoExtra(promedio);
-            CReporte.mostrarResultado(e, aprovado, promedio);
-            
+
+        IBonificacion bonificacion;
+        if (op == 1) {
+            bonificacion = new Bonoextra();
+        } else {
+            bonificacion = new SinBono();
         }
-        else
-        {
-            CReporte.mostrarResultado(e, aprovado, promedio);
-        }
-       sc.close();
+
+       
+        double promedioFinal = bonificacion.aplicar(promedioBase);
+        boolean aprobado = CalculoAcademico.esAprobado(promedioFinal);
+
+      
+        IReporte reporte = new CReporte();
+        reporte.mostrar(estudiante, promedioFinal, aprobado);
+
+        sc.close();
     }
-    
 }

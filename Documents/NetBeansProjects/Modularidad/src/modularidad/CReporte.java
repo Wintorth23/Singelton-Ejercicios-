@@ -8,11 +8,14 @@ package modularidad;
  *
  * @author jepeh
  */
-public class CReporte {
- public static void mostrarResultado(Estudiante e, boolean aprovado, double promedio){
-     System.out.println("Estudiante: "+ e.nombre);
-     System.out.println("Estado: "+ promedio);
-     System.out.println("Estado: "+(aprovado ? "Aprobado":"Reprovado" ));
-     
- }   
+public class CReporte implements IReporte {
+
+
+   @Override
+    public void mostrar(Estudiante e, double promedio, boolean aprobado) {
+        System.out.println("\n======= REPORTE ======= ");
+        System.out.println("Estudiante: " + e.getNombre());
+        System.out.println("Promedio Final: " + promedio);
+        System.out.println("Estado: " + (aprobado ? "Aprobado" : "Reprobado"));
+    }
 }
