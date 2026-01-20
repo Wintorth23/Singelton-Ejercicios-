@@ -14,7 +14,20 @@ public class SingeltonEjemplo {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+ 
+        ReactorSimple reactorA = ReactorSimple.getInstancia();
+        reactorA.subirTemperatura(50);
+        
+        
+        ReactorSimple reactorB = ReactorSimple.getInstancia();
+        
+       
+        System.out.println("Temperatura en A: " + reactorA.getTemperatura());
+        System.out.println("Temperatura en B: " + reactorB.getTemperatura());
+
+        if (reactorA == reactorB) {
+            System.out.println("Resultado: Ambos son exactamente la misma instancia.");
+        }
     }
     
 }
